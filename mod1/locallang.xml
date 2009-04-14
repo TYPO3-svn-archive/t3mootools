@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>module</type>
+		<description>Language labels for module &quot;tools_txt3mootoolsM1&quot;</description>
+		<generator>LFEditor</generator>
+		<authorName>Peter Klein</authorName>
+		<authorEmail>peter@umloud.dk</authorEmail>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="function1">Create custom Mootools JS library</label>
+			<label index="function2">Analyze .js for Mootools dependencies</label>
+			<label index="function3">Process &amp; Analyze t3mootools.txt in extensions</label>
+			<label index="function4">Compress your own javascript file</label>
+			<label index="function5">Display class.t3mootools.php API</label>
+			<label index="mootools.analyze.dependencies">Mootools dependencies found in file:</label>
+			<label index="mootools.analyze.error">Error</label>
+			<label index="mootools.analyze.none">None</label>
+			<label index="mootools.analyze.packed">File is either not ending in .js or file is compressed with Packer!</label>
+			<label index="mootools.button.check">Check</label>
+			<label index="mootools.button.compress">Compress</label>
+			<label index="mootools.button.create">Create Mootools Library</label>
+			<label index="mootools.button.decompress">Decompress</label>
+			<label index="mootools.button.mergemoo">Merge &amp; Use</label>
+			<label index="mootools.button.selectall">Select all</label>
+			<label index="mootools.button.selectnone">Deselect all</label>
+			<label index="mootools.button.usemoo">Use</label>
+			<label index="mootools.component.class.class">Contains the Class Function for easily creating, extending, and implementing reusable Classes.</label>
+			<label index="mootools.component.class.class.extras">Contains Utility Classes that can be implemented into your own Classes to ease the execution of many common tasks.</label>
+			<label index="mootools.component.core.browser">The Browser Core. Contains Browser initialization, Window and Document, and the Browser Hash.</label>
+			<label index="mootools.component.core.core">The core of MooTools, contains all the base functions and the Native and Hash implementations. Required by all the other scripts.</label>
+			<label index="mootools.component.drag.drag">The base Drag Class. Can be used to drag and resize Elements using mouse events.</label>
+			<label index="mootools.component.drag.drag.move">A Drag extension that provides support for the constraining of draggables to containers and droppables.</label>
+			<label index="mootools.component.element.element">One of the most important items in MooTools. Contains the dollar function, the dollars function, and an handful of cross-browser, time-saver methods to let you easily work with HTML Elements.</label>
+			<label index="mootools.component.element.element.dimensions">Contains methods to work with size, scroll, or positioning of Elements and the document.</label>
+			<label index="mootools.component.element.element.event">Contains the Event Native, Element methods for dealing with events, the domready window event, and custom Events.</label>
+			<label index="mootools.component.element.element.style">Contains methods for interacting with the styles of Elements in a fashionable way.</label>
+			<label index="mootools.component.fx.fx">Contains the basic animation logic to be extended by all other Fx Classes.</label>
+			<label index="mootools.component.fx.fx.css">Contains the CSS animation logic. Used by Fx.Tween, Fx.Morph, Fx.Elements.</label>
+			<label index="mootools.component.fx.fx.elements">Effect to change any number of CSS properties of any number of Elements.</label>
+			<label index="mootools.component.fx.fx.morph">Formerly Fx.Styles, effect to transition any number of CSS properties for an element using an object of rules, or CSS based selector rules.</label>
+			<label index="mootools.component.fx.fx.scroll">Effect to smoothly scroll any element, including the window.</label>
+			<label index="mootools.component.fx.fx.slide">Effect to slide an element in and out of view.</label>
+			<label index="mootools.component.fx.fx.transitions">Contains a set of advanced transitions to be used with any of the Fx Classes.</label>
+			<label index="mootools.component.fx.fx.tween">Formerly Fx.Style, effect to transition any CSS property for an element.</label>
+			<label index="mootools.component.interface.accordion">An Fx.Elements extension which allows you to easily create accordion type controls.</label>
+			<label index="mootools.component.interface.scroller">Class which scrolls the contents of any Element (including the window) when the mouse reaches the Element's boundaries.</label>
+			<label index="mootools.component.interface.slider">Class for creating horizontal and vertical slider controls.</label>
+			<label index="mootools.component.interface.smoothscroll">Class for creating a smooth scrolling effect to all internal links on the page.</label>
+			<label index="mootools.component.interface.sortables">Class for creating a drag and drop sorting interface for lists of items.</label>
+			<label index="mootools.component.interface.tips">Class for creating nice tooltips that follow the mouse cursor when hovering over an element.</label>
+			<label index="mootools.component.native.array">Contains Array Prototypes like copy, each, contains, and remove.</label>
+			<label index="mootools.component.native.event">Contains the Event Class, to make the event object Crossbrowser.</label>
+			<label index="mootools.component.native.function">Contains Function Prototypes like create, bind, pass, and delay.</label>
+			<label index="mootools.component.native.hash">Contains Hash Prototypes. Provides a means for overcoming the JavaScript practical impossibility of extending native Objects.</label>
+			<label index="mootools.component.native.number">Contains Number Prototypes like limit, round, times, and ceil.</label>
+			<label index="mootools.component.native.string">Contains String Prototypes like camelCase, capitalize, test, and toInt.</label>
+			<label index="mootools.component.request.request">Powerful all purpose Request Class. Uses XMLHTTPRequest.</label>
+			<label index="mootools.component.request.request.html">Extends the basic Request Class with additional methods for interacting with HTML responses.</label>
+			<label index="mootools.component.request.request.json">Extends the basic Request Class with additional methods for sending and receiving JSON data.</label>
+			<label index="mootools.component.utilities.assets">Provides methods to dynamically load JavaScript, CSS, and Image files into the document.</label>
+			<label index="mootools.component.utilities.color">Class for creating and manipulating colors in JavaScript. Supports HSB -&gt; RGB Conversions and vice versa.</label>
+			<label index="mootools.component.utilities.cookie">Class for creating, reading, and deleting browser Cookies.</label>
+			<label index="mootools.component.utilities.domready">Contains the custom event domready.</label>
+			<label index="mootools.component.utilities.group">Class for monitoring collections of events.</label>
+			<label index="mootools.component.utilities.hash.cookie">Class for creating, reading, and deleting browser Cookies in JSON format.</label>
+			<label index="mootools.component.utilities.json">JSON encoder and decoder.</label>
+			<label index="mootools.component.utilities.selectors">Adds advanced CSS Querying capabilities for selecting elements.</label>
+			<label index="mootools.component.utilities.swiff">Wrapper for embedding SWF movies. Supports (and fixes) External Interface Communication.</label>
+			<label index="mootools.compress.charset">Charset:</label>
+			<label index="mootools.compress.compress">Paste in your UNCOMPRESSED javascript into this field:</label>
+			<label index="mootools.compress.decompress">A COMPRESSED version of your javascript will appear in this field.</label>
+			<label index="mootools.compress.description">This module can be used for compressing your own javascript file(s), using the same compression (YUI) used for compressing the Mootools library.</label>
+			<label index="mootools.compress.filetype">Filetype:</label>
+			<label index="mootools.compress.linebreak">Split at linebreak:</label>
+			<label index="mootools.compress.nomunge">Minify only:</label>
+			<label index="mootools.compress.preservesemi">Preserve semicolons:</label>
+			<label index="mootools.compress.preservestrings">Preserve strings:</label>
+			<label index="mootools.compression">Choose compression type</label>
+			<label index="mootools.compression.jsmin.description">Cleans comments and whitespace, Compression by &lt;a href=&quot;http://www.crockford.com/javascript/jsmin.html&quot;&gt;JSMin&lt;/a&gt;.</label>
+			<label index="mootools.compression.jsmin.name">JsMin Compression</label>
+			<label index="mootools.compression.nodocs.description">Uncompressed, removes only documentation</label>
+			<label index="mootools.compression.nodocs.name">No Documentation</label>
+			<label index="mootools.compression.none.description">Full Source, includes documentation. Recommended while testing &amp; building.</label>
+			<label index="mootools.compression.none.name">No Compression</label>
+			<label index="mootools.compression.packer.description">Uses &lt;a href=&quot;http://joliclic.free.fr/php/javascript-packer/en/&quot; target=&quot;_blank&quot;&gt;the php5 version&lt;/a&gt; of &lt;a href=&quot;http://dean.edwards.name/packer/&quot; target=&quot;_blank&quot;&gt;Dean Edwards Packer&lt;/a&gt;.</label>
+			<label index="mootools.compression.packer.name">Packer Compression</label>
+			<label index="mootools.compression.yui.description">Uses &lt;a href=&quot;http://developer.yahoo.com/yui/compressor/&quot;&gt;YUI Compressor&lt;/a&gt; to clean whitespace and rename internal variables to shorter strings. Does not use eval.</label>
+			<label index="mootools.compression.yui.name">YUI Compressor</label>
+			<label index="mootools.downloadprefs">Choose download preferences</label>
+			<label index="mootools.downloadprefs.description">This puts MooTools in compatibility mode with previous version (1.0/1.1).</label>
+			<label index="mootools.downloadprefs.name">Include compatibility with previous versions</label>
+			<label index="mootools.extension.dependencies">Mootools dependencies found selected extensions:</label>
+			<label index="mootools.extension.description">Select the extensions you want processed and checked for Mootools dependencies.</label>
+			<label index="mootools.extension.extkey">Extension Key:</label>
+			<label index="mootools.extension.title">Title:</label>
+			<label index="mootools.extension.version">Version:</label>
+			<label index="mootools.header1">Choose the Mootools Components you need:</label>
+			<label index="mootools.header2">Find the Mootools Components you need</label>
+			<label index="mootools.header3">Find the Mootools Components you need</label>
+			<label index="mootools.header4">Compress your own javascript file</label>
+			<label index="mootools.header5">Display class.t3mootools.php API</label>
+			<label index="mootools.packito.description">Select the uncompressed Javascript file you want to check for Mootools dependencies.</label>
+			<label index="mootools.packito.local">or Local file:</label>
+			<label index="mootools.packito.note">&lt;em&gt;Note: Only files with the extension &lt;strong&gt;.js&lt;/strong&gt; is accepted.&lt;br /&gt; Local extension dirs can be accessed using EXT:. ie. EXT:t3mootools/res/mooconfig.js&lt;/em&gt;</label>
+			<label index="mootools.packito.remote">Remote file:</label>
+			<label index="title">Mootools Setup</label>
+		</languageKey>
+		<languageKey index="dk" type="array">
+			<label index="function1">Opret Mootools JS library</label>
+			<label index="function2">Analysér .js fil for Mootools afhængigheder</label>
+			<label index="function3">Undersøg og Analysér t3mootools.txt i extensions</label>
+			<label index="function4">Vis class.t3mootools.php API</label>
+			<label index="mootools.analyze.dependencies">Mootools afhængigheder fundet i filen:</label>
+			<label index="mootools.analyze.error">Fejl</label>
+			<label index="mootools.analyze.none">Ingen</label>
+			<label index="mootools.analyze.packed">Enten ender filen ikke på .js eller også er den komprimeret med Packer!</label>
+			<label index="mootools.button.check">Undersøg</label>
+			<label index="mootools.button.create">Opret Mootools Library</label>
+			<label index="mootools.button.mergemoo">Flet &amp; Brug</label>
+			<label index="mootools.button.selectall">Vælg alle</label>
+			<label index="mootools.button.selectnone">Nulstil alle</label>
+			<label index="mootools.button.usemoo">Brug</label>
+			<label index="mootools.compression.nodocs">Ukomprimeret, kun kommentarer er fjernet.</label>
+			<label index="mootools.compressiontype">Vælg kompressionstype</label>
+			<label index="mootools.compressiontype.jsmin">JsMin kompression</label>
+			<label index="mootools.compressiontype.nodocs">Ingen dokumentation</label>
+			<label index="mootools.compressiontype.none">Ingen kompression</label>
+			<label index="mootools.compressiontype.packer">Packer kompression</label>
+			<label index="mootools.extension.dependencies">Mootools afhængigheder fundet i de valgte extensions:</label>
+			<label index="mootools.extension.extkey">Extension Key:</label>
+			<label index="mootools.extension.title">Titel:</label>
+			<label index="mootools.extension.version">Version:</label>
+			<label index="mootools.header1">Vælg de Mootools komponenter du skal bruge:</label>
+			<label index="mootools.header2">Find de Mootools komponenter du har brug for</label>
+			<label index="mootools.header3">Vis class.t3mootools.php API</label>
+			<label index="mootools.packito.local">eller lokal fil:</label>
+			<label index="mootools.packito.remote">Fil på nettet:</label>
+			<label index="title">Mootools Setup</label>
+		</languageKey>
+		<languageKey index="de" type="array">
+			<label index="function1">Erstellung einer individuellen Mootools JS Bibliothek</label>
+			<label index="function2">JS Analyse auf Mootools-Abhängigkeiten</label>
+			<label index="function3">JS Analyse von t3mootools.txt in Extensions</label>
+			<label index="function4">Anzeige der class.t3mootools.php API</label>
+			<label index="mootools.analyze.dependencies">Mootools-Abhängigkeiten in folgender Datei:</label>
+			<label index="mootools.analyze.error">Fehler</label>
+			<label index="mootools.analyze.none">None</label>
+			<label index="mootools.button.check">Analyse</label>
+			<label index="mootools.button.create">Mootools Bibliothek erstellen</label>
+			<label index="mootools.button.mergemoo">Vereinigen &amp; Benützen</label>
+			<label index="mootools.button.selectall">Alles auswählen</label>
+			<label index="mootools.button.selectnone">Auswahl löschen</label>
+			<label index="mootools.button.usemoo">Benützen</label>
+			<label index="mootools.compression.jsmin">Säubert Kommentare und Leerzeichen, Kompression von &lt;a href=&quot;http://www.crockford.com/javascript/jsmin.html&quot; target=&quot;_blank&quot;&gt;JSMin&lt;/a&gt;.</label>
+			<label index="mootools.compression.nodocs">Unkomprimiert, löscht lediglich die Dokumentation</label>
+			<label index="mootools.compression.none">Unkomprimiert, inklusive Dokumentation. Empfehlenswert während Tests &amp; Entwicklung.</label>
+			<label index="mootools.compression.packer">Höchste Kompressionsstufe. Verwendet &lt;a href=&quot;http://joliclic.free.fr/php/javascript-packer/en/&quot; target=&quot;_blank&quot;&gt;die php5 version&lt;/a&gt; von &lt;a href=&quot;http://dean.edwards.name/packer/&quot; target=&quot;_blank&quot;&gt;Dean Edwards Packer&lt;/a&gt;.</label>
+			<label index="mootools.compressiontype">Wähle die Kompressionsstufe</label>
+			<label index="mootools.compressiontype.jsmin">JsMin-Komprimierung</label>
+			<label index="mootools.compressiontype.nodocs">Keine Dokumentation</label>
+			<label index="mootools.compressiontype.none">Keine Komprimierung</label>
+			<label index="mootools.compressiontype.packer">Packer-Komprimierung</label>
+			<label index="mootools.extension.dependencies">Mootools Abhängikeiten in den Extenions gefunden:</label>
+			<label index="mootools.extension.description">Wähle die Extensions aus, die auf Mootools Abhängigkeiten geprüft werden sollen.</label>
+			<label index="mootools.extension.extkey">Extension Key:</label>
+			<label index="mootools.extension.title">Titel:</label>
+			<label index="mootools.extension.version">Version:</label>
+			<label index="mootools.header1">Wähle die benötigten Komponenten aus:</label>
+			<label index="mootools.header2">Finde die benötigten Komponenten</label>
+			<label index="mootools.header3">Anzeige der class.t3mootools.php API</label>
+			<label index="mootools.packito.description">Wähle das unkomprimiete Javascript aus, das auf Mootools-Abhängigkeiten geprüft werden soll.</label>
+			<label index="mootools.packito.local">oder lokale Datei:</label>
+			<label index="mootools.packito.note">&lt;em&gt;Achtung: Nur Dateien mit der Endung &lt;strong&gt;.js&lt;/strong&gt; werden akzeptiert.&lt;br /&gt; Extension-Verzeichnisse können mit EXT: abgerufen werden. zB. EXT:t3mootools/res/mooconfig.js&lt;/em&gt;</label>
+			<label index="mootools.packito.remote">Datei am Server:</label>
+			<label index="title">Mootools Setup</label>
+		</languageKey>
+		<languageKey index="no"></languageKey>
+		<languageKey index="it"></languageKey>
+		<languageKey index="fr"></languageKey>
+		<languageKey index="es"></languageKey>
+		<languageKey index="nl"></languageKey>
+		<languageKey index="cz"></languageKey>
+		<languageKey index="pl"></languageKey>
+		<languageKey index="si"></languageKey>
+		<languageKey index="fi"></languageKey>
+		<languageKey index="tr"></languageKey>
+		<languageKey index="se"></languageKey>
+		<languageKey index="pt"></languageKey>
+		<languageKey index="ru"></languageKey>
+		<languageKey index="ro"></languageKey>
+		<languageKey index="ch"></languageKey>
+		<languageKey index="sk"></languageKey>
+		<languageKey index="lt"></languageKey>
+		<languageKey index="is"></languageKey>
+		<languageKey index="hr"></languageKey>
+		<languageKey index="hu"></languageKey>
+		<languageKey index="gl"></languageKey>
+		<languageKey index="th"></languageKey>
+		<languageKey index="gr"></languageKey>
+		<languageKey index="hk"></languageKey>
+		<languageKey index="eu"></languageKey>
+		<languageKey index="bg"></languageKey>
+		<languageKey index="br"></languageKey>
+		<languageKey index="et"></languageKey>
+		<languageKey index="ar"></languageKey>
+		<languageKey index="he"></languageKey>
+		<languageKey index="ua"></languageKey>
+		<languageKey index="lv"></languageKey>
+		<languageKey index="jp"></languageKey>
+		<languageKey index="vn"></languageKey>
+		<languageKey index="ca"></languageKey>
+		<languageKey index="ba"></languageKey>
+		<languageKey index="kr"></languageKey>
+		<languageKey index="eo"></languageKey>
+		<languageKey index="my"></languageKey>
+		<languageKey index="hi"></languageKey>
+		<languageKey index="fo"></languageKey>
+		<languageKey index="fa"></languageKey>
+		<languageKey index="sr"></languageKey>
+		<languageKey index="sq"></languageKey>
+		<languageKey index="ge"></languageKey>
+		<languageKey index="ga"></languageKey>
+	</data>
+</T3locallang>
