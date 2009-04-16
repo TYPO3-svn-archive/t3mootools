@@ -401,61 +401,27 @@ class  tx_t3mootools_module1 extends t3lib_SCbase {
 					$out = '<br /><p>'.$LANG->getLL('mootools.compress.description').'</p><br />
 					<table border="0" cellspacing="1" cellpadding="2">
 						<tr>
-							<td colspan="8" class="bgColor5">'.$LANG->getLL('mootools.compress.compress').'</td>
+							<td colspan="3" class="bgColor5">'.$LANG->getLL('mootools.compress.compress').'</td>
 						</tr>
 						<tr>
-							<td align="right">'.$LANG->getLL('mootools.compress.linebreak').'</td>
-							<td><select name="linebreak">
-								<option value="1"'.($_POST['linebreak']==1?' selected="selected"':'').'>Yes</option>
-								<option value="0"'.($_POST['linebreak']!=1?' selected="selected"':'').'>No</option>
+							<td colspan="3"><textarea cols="80" rows="12" name="compressdata" id="compressdata">'.stripslashes($_POST['compressdata']).'</textarea></td>
+						</tr>
+						<tr>
+							<td align="right" width: >'.$LANG->getLL('mootools.compress.nomunge').'</td>
+							<td><select name="compression">
+								<option value="1"'.($_POST['compression']==1?' selected="selected"':'').'>Yes</option>
+								<option value="0"'.($_POST['compression']!=1?' selected="selected"':'').'>No</option>
 							</select></td>
-							<td>&nbsp;</td>
-							<td align="right">'.$LANG->getLL('mootools.compress.filetype').'</td>
-							<td><select name="filetype">
-								<option value="js"'.($_POST['filetype']=='js'?' selected="selected"':'').'>Javascript</option>
-								<option value="css"'.($_POST['filetype']=='css'?' selected="selected"':'').'>CSS</option>
-							</select></td>
-							<td>&nbsp;</td>
-							<td align="right">'.$LANG->getLL('mootools.compress.charset').'</td>
-							<td><select name="charset">
-								<option value="UTF-8"'.($_POST['charset']=='UTF-8'?' selected="selected"':'').'>UTF-8</option>
-								<option value="ISO-8859-1"'.($_POST['charset']=='ISO-8859-1'?' selected="selected"':'').'>ISO-8859-1</option>
-								<option value="US-ASCII"'.($_POST['charset']=='US-ASCII'?' selected="selected"':'').'>US-ASCII</option>
-							</select></td>
+							<td><p class="submit"><input type="submit" id="compress" name="compress" value="'.$LANG->getLL('mootools.button.compress').'" /></p></td>
 						</tr>
 						<tr>
-							<td align="right">'.$LANG->getLL('mootools.compress.nomunge').'</td>
-							<td><select name="nomunge">
-								<option value="1"'.($_POST['nomunge']==1?' selected="selected"':'').'>Yes</option>
-								<option value="0"'.($_POST['nomunge']!=1?' selected="selected"':'').'>No</option>
-							</select></td>
-							<td>&nbsp;</td>
-							<td align="right">'.$LANG->getLL('mootools.compress.preservesemi').'</td>
-							<td><select name="preservesemi">
-								<option value="1"'.($_POST['preservesemi']==1?' selected="selected"':'').'>Yes</option>
-								<option value="0"'.($_POST['preservesemi']!=1?' selected="selected"':'').'>No</option>
-							</select></td>
-							<td>&nbsp;</td>
-							<td align="right">'.$LANG->getLL('mootools.compress.preservestrings').'</td>
-							<td><select name="preservestrings">
-								<option value="1"'.($_POST['preservestrings']==1?' selected="selected"':'').'>Yes</option>
-								<option value="0"'.($_POST['preservestrings']!=1?' selected="selected"':'').'>No</option>
-							</select></td>
+							<td colspan="2">&nbsp;</td>
 						</tr>
 						<tr>
-							<td colspan="8"><textarea cols="80" rows="12" name="compressdata" id="compressdata">'.stripslashes($_POST['compressdata']).'</textarea></td>
+							<td colspan="3" class="bgColor5">'.$LANG->getLL('mootools.compress.decompress').'</td>
 						</tr>
 						<tr>
-							<td colspan="8"><p class="submit"><input type="submit" id="compress" name="compress" value="'.$LANG->getLL('mootools.button.compress').'" /></p></td>
-						</tr>
-						<tr>
-							<td colspan="8">&nbsp;</td>
-						</tr>
-						<tr>
-							<td colspan="8" class="bgColor5">'.$LANG->getLL('mootools.compress.decompress').'</td>
-						</tr>
-						<tr>
-							<td colspan="8"><textarea cols="80" rows="12" name="decompressdata" id="decompressdata">'.$compressed.'</textarea></td>
+							<td colspan="3"><textarea cols="80" rows="12" name="decompressdata" id="decompressdata">'.$compressed.'</textarea></td>
 						</tr>
 						<tr>
 					</table>';
@@ -587,33 +553,30 @@ class  tx_t3mootools_module1 extends t3lib_SCbase {
 				}
 
 				function compressJSFile($script) {
-					// YUI Compression code here!
-					$t1 = microtime(true);
-					$dir = t3lib_extMgm::extPath($this->extKey);
-					$input = $dir . uniqid("input") . ".js";
-					$output = $dir . uniqid("output") . ".js";
-			
-					$fp = fopen($input, "w");
-					fwrite($fp, stripslashes($script));
-					fclose($fp);
-			
-					$cmd = 'java -jar '.$dir.'mod1/yuicompressor-2.2.5.jar --type '.$_POST['filetype'].' --charset '.$_POST['charset'].' '.($_POST['nomunge']?'--nomunge ':'').($_POST['preservesemi']?'--preserve-semi ':'').($_POST['preservestrings']?'--preserve-strings ':'').' -o '.$output.' '.$input.' 2>&1';
-										
-					exec($cmd, $out, $err);
-					unlink($input);
-					if ($err === 0) {
-						$fp = fopen($output, "r");
-						$script = fread($fp, filesize($output));
-						fclose($fp);
-						unlink($output);
+					switch((integer)$_POST['compression'])	{
+						case 0:
+							$t1 = microtime(true);
+
+							$packer = new JavaScriptPacker($script, 'Normal', true, false);
+							$script = $packer->pack();
+
+							$t2 = microtime(true);
+							$time = sprintf('%.4f', ($t2 - $t1) );
+							$out = 'Mootools script packed in '.$time.' s.';
+						break;
+						case 1:
+							$t1 = microtime(true);
+							$script = get_magic_quotes_gpc() ? stripslashes($script) : $script;
+							//$script = JSMin::minify($script);// JSMin v1.1.1 method
+							$jsMin = new JSMin($script, false);
+							$script = $jsMin->minify();
+							
+							$t2 = microtime(true);
+							$time = sprintf('%.4f', ($t2 - $t1) );
+							$out = 'Mootools script minimized in '.$time.' s.';
+						break;
 					}
-					else {
-						return 'Error: '.$err."\n".implode("\n", $out);
-					}
-					$t2 = microtime(true);
-					$time = sprintf('%.4f', ($t2 - $t1) );
-					$out = 'Mootools script YUI compressed in '.$time.' s.';
-					return $script;			
+					return $script;
 				}
 
 				function createMooFile() {
@@ -624,31 +587,6 @@ class  tx_t3mootools_module1 extends t3lib_SCbase {
 					$sizeBefore = strlen($script);
 
 					switch((string)$_POST['compression'])	{
-						case 'yui':
-							$t1 = microtime(true);
-
-							// YUI Compression code here!
-						    $dir = t3lib_extMgm::extPath($this->extKey);
-						    $input = $dir.uniqid("input").'.js';
-						    $output = $dir.uniqid("output").'.js';
-						
-						    $fp = fopen($input, "w");
-						    fwrite($fp, $script);
-						    fclose($fp);
-						
-						    $cmd = "java -jar " . $dir . "mod1/yuicompressor-2.2.5.jar --charset UTF-8 -o " . $output . " " . $input . " 2>&1";
-						    exec($cmd, $out, $err);
-						    unlink($input);
-						    if ($err === 0) {
-						        $fp = fopen($output, "r");
-						        $script = fread($fp, filesize($output));
-						        fclose($fp);
-						        unlink($output);
-						    }
-							$t2 = microtime(true);
-							$time = sprintf('%.4f', ($t2 - $t1) );
-							$out = 'Mootools script YUI compressed in '.$time.' s.';
-						break;
 						case 'packer':
 							$t1 = microtime(true);
 
@@ -1128,13 +1066,6 @@ class  tx_t3mootools_module1 extends t3lib_SCbase {
 		</div>
 		<h2 class="options compression-options"><a href= "#" id="compression-tog">'.$LANG->getLL('mootools.compression').'</a></h2>
 			<table id="download-options">
-				<tr class="radio">
-					<td class="check">
-							<input type="radio" name="compression" value="yui" checked="1" />
-					</td>
-					<td class="name">'.$LANG->getLL('mootools.compression.yui.name').'</td>
-					<td class="description">'.$LANG->getLL('mootools.compression.yui.description').'</td>
-				</tr>
 				<tr class="radio">
 					<td class="check">
 							<input type="radio" name="compression" value="packer" />

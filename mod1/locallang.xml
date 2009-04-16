@@ -71,7 +71,7 @@
 			<label index="mootools.compress.charset">Charset:</label>
 			<label index="mootools.compress.compress">Paste in your UNCOMPRESSED javascript into this field:</label>
 			<label index="mootools.compress.decompress">A COMPRESSED version of your javascript will appear in this field.</label>
-			<label index="mootools.compress.description">This module can be used for compressing your own javascript file(s), using the same compression (YUI) used for compressing the Mootools library.</label>
+			<label index="mootools.compress.description">This module can be used for compressing your own javascript file(s), using the same compression used for compressing the Mootools library.</label>
 			<label index="mootools.compress.filetype">Filetype:</label>
 			<label index="mootools.compress.linebreak">Split at linebreak:</label>
 			<label index="mootools.compress.nomunge">Minify only:</label>
