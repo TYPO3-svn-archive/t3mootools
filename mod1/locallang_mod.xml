@@ -20,7 +20,11 @@
 			<label index="mlang_labels_tablabel">T3Mootools</label>
 			<label index="mlang_tabs_tab">T3Mootools</label>
 		</languageKey>
-		<languageKey index="de"></languageKey>
+		<languageKey index="de">
+			<label index="mlang_labels_tabdescr">T3Mootools</label>
+			<label index="mlang_labels_tablabel">T3Mootools</label>
+			<label index="mlang_tabs_tab">T3Mootools</label>
+		</languageKey>
 		<languageKey index="no"></languageKey>
 		<languageKey index="it"></languageKey>
 		<languageKey index="fr"></languageKey>

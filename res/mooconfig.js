@@ -74,3 +74,4 @@ var Site = {
 window.addEvent('domready', function(){
 	Site.startMooForm();
 });
+

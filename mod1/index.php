@@ -112,36 +112,20 @@ class  tx_t3mootools_module1 extends t3lib_SCbase {
 						$this->doc->form='<form action="'.$_SERVER['SCRIPT_NAME'].'#moobuttons" method="post" enctype="multipart/form-data" name="moo">';
 
 							// JavaScript (Mootools subscripts is used, as no compressed lib exists yet or might not include the supparts needed.)
+
 						$this->doc->JScode = '
 							<script type="text/javascript" src="../'.$this->mooVersion.'/Core/Core.js"></script>
 							<script type="text/javascript" src="../'.$this->mooVersion.'/Core/Browser.js"></script>
-							<script type="text/javascript" src="../'.$this->mooVersion.'/Class/Class.js"></script>
-							<script type="text/javascript" src="../'.$this->mooVersion.'/Class/Class.Extras.js"></script>
 							<script type="text/javascript" src="../'.$this->mooVersion.'/Native/Array.js"></script>
-							<script type="text/javascript" src="../'.$this->mooVersion.'/Native/Event.js"></script>
 							<script type="text/javascript" src="../'.$this->mooVersion.'/Native/Function.js"></script>
-							<script type="text/javascript" src="../'.$this->mooVersion.'/Native/Hash.js"></script>
 							<script type="text/javascript" src="../'.$this->mooVersion.'/Native/Number.js"></script>
 							<script type="text/javascript" src="../'.$this->mooVersion.'/Native/String.js"></script>
+							<script type="text/javascript" src="../'.$this->mooVersion.'/Native/Hash.js"></script>
+							<script type="text/javascript" src="../'.$this->mooVersion.'/Native/Event.js"></script>
 							<script type="text/javascript" src="../'.$this->mooVersion.'/Element/Element.js"></script>
-							<script type="text/javascript" src="../'.$this->mooVersion.'/Element/Element.Dimensions.js"></script>
 							<script type="text/javascript" src="../'.$this->mooVersion.'/Element/Element.Event.js"></script>
-							<script type="text/javascript" src="../'.$this->mooVersion.'/Element/Element.Style.js"></script>
-							<script type="text/javascript"  src="../'.$this->mooVersion.'/Utilities/Assets.js"></script>
-							<script type="text/javascript"  src="../'.$this->mooVersion.'/Utilities/Color.js"></script>
-							<script type="text/javascript"  src="../'.$this->mooVersion.'/Utilities/Cookie.js"></script>
 							<script type="text/javascript"  src="../'.$this->mooVersion.'/Utilities/Domready.js"></script>
-							<script type="text/javascript"  src="../'.$this->mooVersion.'/Utilities/Group.js"></script>
-							<script type="text/javascript"  src="../'.$this->mooVersion.'/Utilities/Hash.Cookie.js"></script>
-							<script type="text/javascript"  src="../'.$this->mooVersion.'/Utilities/JSON.js"></script>
 							<script type="text/javascript"  src="../'.$this->mooVersion.'/Utilities/Selectors.js"></script>
-							<script type="text/javascript" src="../'.$this->mooVersion.'/Fx/Fx.js"></script>
-							<script type="text/javascript" src="../'.$this->mooVersion.'/Fx/Fx.CSS.js"></script>
-							<script type="text/javascript" src="../'.$this->mooVersion.'/Fx/Fx.Elements.js"></script>
-							<script type="text/javascript" src="../'.$this->mooVersion.'/Fx/Fx.Morph.js"></script>
-							<script type="text/javascript" src="../'.$this->mooVersion.'/Fx/Fx.Scroll.js"></script>
-							<script type="text/javascript" src="../'.$this->mooVersion.'/Fx/Fx.Transitions.js"></script>
-							<script type="text/javascript" src="../'.$this->mooVersion.'/Fx/Fx.Tween.js"></script>
 							<script type="text/javascript" src="../res/mooconfig.js"></script>
 							<script language="javascript" type="text/javascript">
 								script_ended = 0;
@@ -656,7 +640,6 @@ class  tx_t3mootools_module1 extends t3lib_SCbase {
 					$formVars = $this->loadMooConf();
 					$out = '
 <div class="">
-	<h2 class="section">Choose the Components you need</h2>
 			<table id="download">
 				<tr>
 					<th colspan="3"><h3>Core</h3></th>
@@ -837,7 +820,7 @@ class  tx_t3mootools_module1 extends t3lib_SCbase {
 				</tr>
 				<tr class="check">
 					<td class="check">
-							<input type="checkbox" id="Swiff" deps="Element.Event" name="files[]" value="Utilities/Swiff.js"'.(in_array("Utilities/Swiff.js", $formVars)?' checked="1"':'').' />
+							<input type="checkbox" id="Swiff" deps="Class.Extras" name="files[]" value="Utilities/Swiff.js"'.(in_array("Utilities/Swiff.js", $formVars)?' checked="1"':'').' />
 					</td>
 					<td class="name">Swiff</td>
 					<td class="description">
@@ -960,7 +943,7 @@ class  tx_t3mootools_module1 extends t3lib_SCbase {
 				</tr>
 				<tr class="check">
 					<td class="check">
-							<input type="checkbox" id="Request" deps="Class.Extras" name="files[]" value="Request/Request.js"'.(in_array("Request/Request.js", $formVars)?' checked="1"':'').' />
+							<input type="checkbox" id="Request" deps="Class.Extras,Element" name="files[]" value="Request/Request.js"'.(in_array("Request/Request.js", $formVars)?' checked="1"':'').' />
 					</td>
 					<td class="name">Request</td>
 					<td class="description">
@@ -969,7 +952,7 @@ class  tx_t3mootools_module1 extends t3lib_SCbase {
 				</tr>
 				<tr class="check">
 					<td class="check">
-							<input type="checkbox" id="Request.HTML" deps="Request,Element" name="files[]" value="Request/Request.HTML.js"'.(in_array("Request/Request.HTML.js", $formVars)?' checked="1"':'').' />
+							<input type="checkbox" id="Request.HTML" deps="Request" name="files[]" value="Request/Request.HTML.js"'.(in_array("Request/Request.HTML.js", $formVars)?' checked="1"':'').' />
 					</td>
 					<td class="name">Request.HTML</td>
 					<td class="description">
@@ -1037,7 +1020,7 @@ class  tx_t3mootools_module1 extends t3lib_SCbase {
 				</tr>
 				<tr class="check">
 					<td class="check">
-							<input type="checkbox" id="Slider" deps="Drag" name="files[]" value="Interface/Slider.js"'.(in_array("Interface/Slider.js", $formVars)?' checked="1"':'').' />
+							<input type="checkbox" id="Slider" deps="Drag,Element.Dimensions" name="files[]" value="Interface/Slider.js"'.(in_array("Interface/Slider.js", $formVars)?' checked="1"':'').' />
 					</td>
 					<td class="name">Slider</td>
 					<td class="description">
@@ -1055,7 +1038,7 @@ class  tx_t3mootools_module1 extends t3lib_SCbase {
 				</tr>
 				<tr class="check last">
 					<td class="check">
-							<input type="checkbox" id="Accordion" deps="Fx.Elements" name="files[]" value="Interface/Accordion.js"'.(in_array("Interface/Accordion.js", $formVars)?' checked="1"':'').' />
+							<input type="checkbox" id="Accordion" deps="Fx.Elements,Element.Event" name="files[]" value="Interface/Accordion.js"'.(in_array("Interface/Accordion.js", $formVars)?' checked="1"':'').' />
 					</td>
 					<td class="name">Accordion</td>
 					<td class="description">
