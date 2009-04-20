@@ -124,8 +124,8 @@ class  tx_t3mootools_module1 extends t3lib_SCbase {
 							<script type="text/javascript" src="../'.$this->mooVersion.'/Native/Event.js"></script>
 							<script type="text/javascript" src="../'.$this->mooVersion.'/Element/Element.js"></script>
 							<script type="text/javascript" src="../'.$this->mooVersion.'/Element/Element.Event.js"></script>
-							<script type="text/javascript"  src="../'.$this->mooVersion.'/Utilities/Domready.js"></script>
 							<script type="text/javascript"  src="../'.$this->mooVersion.'/Utilities/Selectors.js"></script>
+              <script type="text/javascript" src="../'.$this->mooVersion.'/Utilities/DomReady.js"></script>
 							<script type="text/javascript" src="../res/mooconfig.js"></script>
 							<script language="javascript" type="text/javascript">
 								script_ended = 0;
@@ -1051,7 +1051,7 @@ class  tx_t3mootools_module1 extends t3lib_SCbase {
 			<table id="download-options">
 				<tr class="radio">
 					<td class="check">
-							<input type="radio" name="compression" value="packer" />
+							<input type="radio" name="compression" value="packer" checked="1" />
 					</td>
 					<td class="name">'.$LANG->getLL('mootools.compression.packer.name').'</td>
 					<td class="description">'.$LANG->getLL('mootools.compression.packer.description').'</td>
