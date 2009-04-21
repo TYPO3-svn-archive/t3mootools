@@ -30,8 +30,8 @@
 * @author Peter Klein <peter@umloud.dk>
 */
 
-if (file_exists(t3lib_extMgm::siteRelPath('t3mootools').'res/mootools_1.21.js')) {
-	define('T3MOOTOOLS', 'mootools_1.21.js');
+if (file_exists(t3lib_extMgm::siteRelPath('t3mootools').'res/mootools_v1.2.1.js')) {
+	define('T3MOOTOOLS', 'mootools_v1.2.1.js');
 }
 
 /**
