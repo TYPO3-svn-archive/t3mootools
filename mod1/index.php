@@ -1078,7 +1078,7 @@ class  tx_t3mootools_module1 extends t3lib_SCbase {
 					<td class="description">'.$LANG->getLL('mootools.compression.none.description').'.</td>
 				</tr>
 			</table>
-		<input type="hidden" name="version" value="1.2" />
+		<input type="hidden" name="version" value="1.2.1" />
 		<table>
 			<tr>
 				<td><p class="submit"><input type="button" id="select_all" name="select_all" value="'.$LANG->getLL('mootools.button.selectall').'" /></p></td>
