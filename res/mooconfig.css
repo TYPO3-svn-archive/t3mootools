@@ -1,0 +1,85 @@
+table.download, table.compression {
+	width: 100%;
+	border: 0;
+	border-collapse: collapse;
+}
+table.download th, table.download td, table.compression th, table.compression td {
+	padding: 4px 10px;
+}
+table.download th {
+	text-align: left;
+	background: #d7dbe2;
+	color: #000;
+	border-top: 2px solid #333;
+	border-bottom: 1px solid #333;
+}
+table.download h2 {
+	font-size: 14px;
+	background-color: transparent;
+}
+table.download h3 {
+	font-size: 12px;
+	background-color: transparent;
+}
+table.download td {
+	border-bottom: 1px solid #333;
+	border-top: 1px solid #333;
+	vertical-align: middle;
+}
+table.download tr.selected td, table.compression tr.selected td {
+	background: url(images/row_back_selected.png) left bottom repeat-x;
+}
+table.download td.check div.check, table.options td.check div.check {
+	border: 1px solid #666;
+	background-repeat: no-repeat;
+	background-position: center center;
+	height: 13px;
+	width: 14px;
+}
+table.download td.check div.selected, table.options td.check div.selected {
+	background-image: url(images/check.png) !important;
+	background-image: url(images/check.gif);
+	padding: 1px;
+	border: 0;
+}
+table.lib_table {
+	border-collapse: separate;
+	padding: 4px 0 0;
+}
+tr.library div.check {
+	background-position:center;
+	background-repeat:no-repeat;
+	border:1px solid #666;
+	height:13px;
+	width:14px;
+	position: absolute;
+	right: 0px;
+	cursor: pointer;
+}
+tr.library th {
+	position: relative;
+}
+div.lib_check {
+}
+tr.library div.lib_check_container {
+	float: right;
+	padding-right: 35px;
+	position: absolute;
+	right: 20px;
+	margin-top: 2px;
+}
+tr.library div.selected {
+	background-image:url(images/check.png) !important;
+	border:0pt none;
+	padding:1px;
+}
+h2.compression-options {
+	margin-top: 25px;
+}
+
+div.lib_slider {
+	width: 98%;
+	margin: 0px 1%;
+	border: solid #999;
+	border-width: 0px 1px 1px 1px;
+}

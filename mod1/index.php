@@ -53,7 +53,7 @@ if (t3lib_extMgm::isLoaded('extdeveval'))    {
 class  tx_t3mootools_module1 extends t3lib_SCbase {
 				var $pageinfo;
 				var $extKey = 't3mootools';
-				var $mooVersion = '1-2-1';
+				var $mooVersion = '1-2-2';
 				/**
 				 * Initializes the Module
 				 * @return	void
@@ -114,19 +114,29 @@ class  tx_t3mootools_module1 extends t3lib_SCbase {
 							// JavaScript (Mootools subscripts is used, as no compressed lib exists yet or might not include the supparts needed.)
 
 						$this->doc->JScode = '
+							<link rel="stylesheet" type="text/css" media="screen" href="../res/mooconfig.css" />				
+
 							<script type="text/javascript" src="../'.$this->mooVersion.'/Core/Core.js"></script>
 							<script type="text/javascript" src="../'.$this->mooVersion.'/Core/Browser.js"></script>
 							<script type="text/javascript" src="../'.$this->mooVersion.'/Native/Array.js"></script>
+							<script type="text/javascript" src="../'.$this->mooVersion.'/Native/Hash.js"></script>
+							<script type="text/javascript" src="../'.$this->mooVersion.'/Native/String.js"></script>
 							<script type="text/javascript" src="../'.$this->mooVersion.'/Native/Function.js"></script>
 							<script type="text/javascript" src="../'.$this->mooVersion.'/Native/Number.js"></script>
-							<script type="text/javascript" src="../'.$this->mooVersion.'/Native/String.js"></script>
-							<script type="text/javascript" src="../'.$this->mooVersion.'/Native/Hash.js"></script>
 							<script type="text/javascript" src="../'.$this->mooVersion.'/Native/Event.js"></script>
 							<script type="text/javascript" src="../'.$this->mooVersion.'/Element/Element.js"></script>
 							<script type="text/javascript" src="../'.$this->mooVersion.'/Element/Element.Event.js"></script>
-							<script type="text/javascript"  src="../'.$this->mooVersion.'/Utilities/Selectors.js"></script>
-              <script type="text/javascript" src="../'.$this->mooVersion.'/Utilities/DomReady.js"></script>
-							<script type="text/javascript" src="../res/mooconfig.js"></script>
+							<script type="text/javascript" src="../'.$this->mooVersion.'/Element/Element.Style.js"></script>
+							<script type="text/javascript" src="../'.$this->mooVersion.'/Utilities/Selectors.js"></script>
+							<script type="text/javascript" src="../'.$this->mooVersion.'/Utilities/Domready.js"></script>
+							<script type="text/javascript" src="../'.$this->mooVersion.'/Class/Class.js"></script>
+							<script type="text/javascript" src="../'.$this->mooVersion.'/Class/Class.Extras.js"></script>
+							<script type="text/javascript" src="../'.$this->mooVersion.'/Fx/Fx.js"></script>
+							<script type="text/javascript" src="../'.$this->mooVersion.'/Fx/Fx.CSS.js"></script>
+							<script type="text/javascript" src="../'.$this->mooVersion.'/Fx/Fx.Morph.js"></script>
+							<script type="text/javascript" src="../'.$this->mooVersion.'/Fx/Fx.Transitions.js"></script>
+							<script type="text/javascript" src="../'.$this->mooVersion.'/Fx/Fx.Slide.js"></script>
+							<script type="text/javascript" src="../res/mooconfig1.2.2.js"></script>
 							<script language="javascript" type="text/javascript">
 								script_ended = 0;
 								function jumpToUrl(URL)	{
@@ -209,9 +219,15 @@ class  tx_t3mootools_module1 extends t3lib_SCbase {
 				function moduleContent()	{
 					global $LANG;
 
-					$this->mooConfig = $_POST['files'];
+					$this->mooConfig = $_POST['mootools-core_files'];
+					$this->mooConfigMore = $_POST['mootools-more_files'];
+					
 					if (!is_array($this->mooConfig) || !isset($this->mooConfig)) {
 						$this->mooConfig = array('Core/Core.js');
+					}
+
+					if (is_array($this->mooConfigMore) && isset($this->mooConfigMore)) {
+						$this->mooConfig = array_merge($this->mooConfig,$this->mooConfigMore);
 					}
 
 					switch((string)$this->MOD_SETTINGS['function'])    {
@@ -358,24 +374,21 @@ class  tx_t3mootools_module1 extends t3lib_SCbase {
 				function makeProcessForm() {
 					global $LANG;
 					return '<br /><p>'.$LANG->getLL('mootools.extension.description').'</p><br />
-					<table border="0" cellspacing="1" cellpadding="2" id="process">
-						<tr class="bgColor5">
-							<td>&nbsp;</td>
-							<td>'.$LANG->getLL('mootools.extension.title').'</td>
-							<td>'.$LANG->getLL('mootools.extension.extkey').'</td>
-							<td>'.$LANG->getLL('mootools.extension.version').'</td>
+					<table border="0" cellspacing="1" cellpadding="2" id="process" class="download">
+						<tr class="folder">
+          		<th>&nbsp;</th>
+							<th>'.$LANG->getLL('mootools.extension.title').'</th>
+							<th>'.$LANG->getLL('mootools.extension.extkey').'</th>
+							<th>'.$LANG->getLL('mootools.extension.version').'</th>
 						</tr>
 							'.$this->makeCheckboxes().'
 						<tr>
-							<td colspan="4">
-								<table>
-									<tr>
-										<td><p class="submit"><input type="button" id="select_all" name="select_all" value="'.$LANG->getLL('mootools.button.selectall').'" /></p></td>
-										<td><p class="submit"><input type="button" id="select_none" name="select_none" value="'.$LANG->getLL('mootools.button.selectnone').'" /></p></td>
-										<td><p class="submit"><input type="submit" value="'.$LANG->getLL('mootools.button.check').'" /></p></td>
-									</tr>
-								</table>
-							</td>
+					</table>
+					<table>
+						<tr>
+							<td><p class="submit"><input type="button" id="select_all" name="select_all" value="'.$LANG->getLL('mootools.button.selectall').'" /></p></td>
+							<td><p class="submit"><input type="button" id="select_none" name="select_none" value="'.$LANG->getLL('mootools.button.selectnone').'" /></p></td>
+							<td><p class="submit"><input type="submit" value="'.$LANG->getLL('mootools.button.check').'" /></p></td>
 						</tr>
 					</table>';
 				}
@@ -434,33 +447,66 @@ class  tx_t3mootools_module1 extends t3lib_SCbase {
 						'Element.Style' => 'Element',
 						'Element.Dimensions' => 'Element',
 						'Selectors' => 'Utilities',
-						'DomReady' => 'Utilities',
+						'Domready' => 'Utilities',
 						'Cookie' => 'Utilities',
 						'JSON' => 'Utilities',
 						'Swiff' => 'Utilities',
-						'Hash.Cookie' => 'Utilities',
-						'Color' => 'Utilities',
-						'Group' => 'Utilities',
-						'Assets' => 'Utilities',
 						'Fx' => 'Fx',
 						'Fx.CSS' => 'Fx',
 						'Fx.Tween' => 'Fx',
 						'Fx.Morph' => 'Fx',
 						'Fx.Transitions' => 'Fx',
-						'Fx.Slide' => 'Fx',
-						'Fx.Scroll' => 'Fx',
-						'Fx.Elements' => 'Fx',
 						'Request' => 'Request',
 						'Request.HTML' => 'Request',
 						'Request.JSON' => 'Request',
+						'More' => 'Core',
+						'MooTools.Lang' => 'Core',
+						'Log' => 'Core',
+						'Class.Refactor' => 'Class',
+						'Class.Binds' => 'Class',
+						'Class.Occlude' => 'Class',
+						'Chain.Wait' => 'Class',
+						'Array.Extras' => 'Native',
+						'Date' => 'Native',
+						'Date.Extras' => 'Native',
+						'Hash.Extras' => 'Native',
+						'String.Extras' => 'Native',
+						'String.QueryString' => 'Native',
+						'URI' => 'Native',
+						'URI.Relative' => 'Native',
+						'Element.Forms' => 'Element',
+						'Element.Measure' => 'Element',
+						'Element.Pin' => 'Element',
+						'Element.Position' => 'Element',
+						'Element.Shortcuts' => 'Element',
+						'FormValidator' => 'Forms',
+						'FormValidator.Inline' => 'Forms',
+						'FormValidator.Extras' => 'Forms',
+						'OverText' => 'Forms',
+						'Fx.Elements' => 'Fx',
+						'Fx.Accordion' => 'Fx',
+						'Fx.Move' => 'Fx',
+						'Fx.Reveal' => 'Fx',
+						'Fx.Scroll' => 'Fx',
+						'Fx.Slide' => 'Fx',
+						'Fx.SmoothScroll' => 'Fx',
+						'Fx.Sort' => 'Fx',
 						'Drag' => 'Drag',
 						'Drag.Move' => 'Drag',
-						'Sortables' => 'Interface',
+						'Slider' => 'Drag',
+						'Sortables' => 'Drag',
+						'Request.JSONP' => 'Request',
+						'Request.Queue' => 'Request',
+						'Request.Periodical' => 'Request',
+						'Assets' => 'Utilities',
+						'Color' => 'Utilities',
+						'Group' => 'Utilities',
+						'Hash.Cookie' => 'Utilities',
+						'IframeShim' => 'Utilities',
 						'Tips' => 'Interface',
-						'SmoothScroll' => 'Interface',
-						'Slider' => 'Interface',
 						'Scroller' => 'Interface',
-						'Accordion' => 'Interface',
+						'Date.English.US' => 'Localization',
+						'FormValidator.English' => 'Localization'
 					);
 
 					$lines = file($t3moofile);
@@ -520,12 +566,17 @@ class  tx_t3mootools_module1 extends t3lib_SCbase {
 										$extInfo = $this->includeEMCONF($path.$dirName.'/ext_emconf.php', $dirName);
 										if (is_array($_POST['ext'])) $selVal = in_array($path.$dirName.'/t3mootools.txt',$_POST['ext']) ? ' checked="checked"' : '';
 										$c++;
-										$opt[]='<tr class="bgColor4" valign="top">
-															<td><input name="ext[]" type="checkbox" id="ext'.$c.'" class="extkey" value="'.htmlspecialchars($path.$dirName.'/t3mootools.txt').'"'.$selVal.' /></td>
-															<td title="'.htmlspecialchars($extInfo['description']).'" nowrap><label for="ext'.$c.'">'.htmlspecialchars($extInfo['title']).'</label></td>
-															<td nowrap>'.htmlspecialchars($dirName).'</td>
-															<td nowrap>'.htmlspecialchars($extInfo['version']).'</td>
-														</tr>';
+										$opt[]='<tr class="option check"> 
+															<td class="check"> 
+																<div class="check lib_check" id="ext'.$c.'"> 
+																	<input type="checkbox" name="ext[]" value="'.htmlspecialchars($path.$dirName.'/t3mootools.txt').'"'.$selVal.' />
+																</div>
+															</td>
+															<td class="title">'.htmlspecialchars($extInfo['title']).'</td>
+															<td class="extkey">'.htmlspecialchars($dirName).'</td>
+															<td class="version">'.htmlspecialchars($extInfo['version']).'</td>
+														</tr>
+														';
 										}
 									}
 								}
@@ -565,6 +616,7 @@ class  tx_t3mootools_module1 extends t3lib_SCbase {
 
 				function createMooFile() {
 					$script = '';
+
 					foreach($this->mooConfig as $scriptPart) {
 						$script.= @file_get_contents(t3lib_extMgm::extPath($this->extKey).$this->mooVersion.'/'.$scriptPart);
 					}
@@ -628,7 +680,7 @@ class  tx_t3mootools_module1 extends t3lib_SCbase {
 				}
 
 				function saveMooConf($formVars) {
-					$this->file_put_content(t3lib_extMgm::extPath($this->extKey).'res/t3mootools.cfg', serialize($formVars));
+			  	$this->file_put_content(t3lib_extMgm::extPath($this->extKey).'res/t3mootools.cfg', serialize($formVars));
 				}
 
 				function mergeMooConf($formVars) {
@@ -639,453 +691,1015 @@ class  tx_t3mootools_module1 extends t3lib_SCbase {
 					global $LANG;
 					$formVars = $this->loadMooConf();
 					$out = '
-<div class="">
-			<table id="download">
-				<tr>
-					<th colspan="3"><h3>Core</h3></th>
-				</tr>
-				<tr class="check">
-					<td class="check">
-						<input type="checkbox" id="Core" deps="Core" name="files[]" value="Core/Core.js"'.(in_array("Core/Core.js", $formVars)?' checked="1"':'').' />
-					</td>
-					<td class="name">Core</td>
-					<td class="description">
-						<p>'.$LANG->getLL('mootools.component.core.core').'</p>
-					</td>
-				</tr>
-				<tr class="check">
-					<td class="check">
-							<input type="checkbox" id="Browser" deps="Core" name="files[]" value="Core/Browser.js"'.(in_array("Core/Browser.js", $formVars)?' checked="1"':'').' />
-					</td>
-					<td class="name">Browser</td>
-					<td class="description">
-						<p>'.$LANG->getLL('mootools.component.core.browser').'</p>
-					</td>
-				</tr>
-				<tr>
-					<th colspan="3"><h3>Native</h3></th>
-				</tr>
-				<tr class="check">
-					<td class="check">
-							<input type="checkbox" id="Array" deps="Core" name="files[]" value="Native/Array.js"'.(in_array("Native/Array.js", $formVars)?' checked="1"':'').' />
-					</td>
-					<td class="name">Array</td>
-					<td class="description">
-						<p>'.$LANG->getLL('mootools.component.native.array').'</p>
-					</td>
-				</tr>
-				<tr class="check">
-					<td class="check">
-							<input type="checkbox" id="Function" deps="Core" name="files[]" value="Native/Function.js"'.(in_array("Native/Function.js", $formVars)?' checked="1"':'').' />
-					</td>
-					<td class="name">Function</td>
-					<td class="description">
-						<p>'.$LANG->getLL('mootools.component.native.function').'</p>
-					</td>
-				</tr>
-				<tr class="check">
-					<td class="check">
-							<input type="checkbox" id="Number" deps="Core" name="files[]" value="Native/Number.js"'.(in_array("Native/Number.js", $formVars)?' checked="1"':'').' />
-					</td>
-					<td class="name">Number</td>
-					<td class="description">
-						<p>'.$LANG->getLL('mootools.component.native.number').'</p>
-					</td>
-				</tr>
-				<tr class="check">
-					<td class="check">
-							<input type="checkbox" id="String" deps="Core" name="files[]" value="Native/String.js"'.(in_array("Native/String.js", $formVars)?' checked="1"':'').' />
-					</td>
-					<td class="name">String</td>
-					<td class="description">
-						<p>'.$LANG->getLL('mootools.component.native.string').'</p>
-					</td>
-				</tr>
-				<tr class="check">
-					<td class="check">
-							<input type="checkbox" id="Hash" deps="Core" name="files[]" value="Native/Hash.js"'.(in_array("Native/Hash.js", $formVars)?' checked="1"':'').' />
-					</td>
-					<td class="name">Hash</td>
-					<td class="description">
-						<p>'.$LANG->getLL('mootools.component.native.hash').'</p>
-					</td>
-				</tr>
-				<tr class="check">
-					<td class="check">
-							<input type="checkbox" id="Event" deps="Browser,Array,Function,Number,String,Hash" name="files[]" value="Native/Event.js"'.(in_array("Native/Event.js", $formVars)?' checked="1"':'').' />
-					</td>
-					<td class="name">Event</td>
-					<td class="description">
-						<p>'.$LANG->getLL('mootools.component.native.event').'</p>
-					</td>
-				</tr>
-				<tr>
-					<th colspan="3"><h3>Class</h3></th>
-				</tr>
-				<tr class="check">
-					<td class="check">
-							<input type="checkbox" id="Class" deps="Core,Array,String,Function,Number,Hash" name="files[]" value="Class/Class.js"'.(in_array("Class/Class.js", $formVars)?' checked="1"':'').' />
-					</td>
-					<td class="name">Class</td>
-					<td class="description">
-						<p>'.$LANG->getLL('mootools.component.class.class').'</p>
-					</td>
-				</tr>
-				<tr class="check">
-					<td class="check">
-							<input type="checkbox" id="Class.Extras" deps="Class" name="files[]" value="Class/Class.Extras.js"'.(in_array("Class/Class.Extras.js", $formVars)?' checked="1"':'').' />
-					</td>
-					<td class="name">Class.Extras</td>
-					<td class="description">
-						<p>'.$LANG->getLL('mootools.component.class.class.extras').'</p>
-					</td>
-				</tr>
-				<tr>
-					<th colspan="3"><h3>Element</h3></th>
-				</tr>
-				<tr class="check">
-					<td class="check">
-							<input type="checkbox" id="Element" deps="Browser,Array,String,Function,Number,Hash" name="files[]" value="Element/Element.js"'.(in_array("Element/Element.js", $formVars)?' checked="1"':'').' />
-					</td>
-					<td class="name">Element</td>
-					<td class="description">
-						<p>'.$LANG->getLL('mootools.component.element.element').'</p>
-					</td>
-				</tr>
-				<tr class="check">
-					<td class="check">
-							<input type="checkbox" id="Element.Event" deps="Element,Event" name="files[]" value="Element/Element.Event.js"'.(in_array("Element/Element.Event.js", $formVars)?' checked="1"':'').' />
-					</td>
-					<td class="name">Element.Event</td>
-					<td class="description">
-						<p>'.$LANG->getLL('mootools.component.element.element.event').'</p>
-					</td>
-				</tr>
-				<tr class="check">
-					<td class="check">
-							<input type="checkbox" id="Element.Style" deps="Element" name="files[]" value="Element/Element.Style.js"'.(in_array("Element/Element.Style.js", $formVars)?' checked="1"':'').' />
-					</td>
-					<td class="name">Element.Style</td>
-					<td class="description">
-						<p>'.$LANG->getLL('mootools.component.element.element.style').'</p>
-					</td>
-				</tr>
-				<tr class="check">
-					<td class="check">
-							<input type="checkbox" id="Element.Dimensions" deps="Element" name="files[]" value="Element/Element.Dimensions.js"'.(in_array("Element/Element.Dimensions.js", $formVars)?' checked="1"':'').' />
-					</td>
-					<td class="name">Element.Dimensions</td>
-					<td class="description">
-						<p>'.$LANG->getLL('mootools.component.element.element.dimensions').'</p>
-					</td>
-				</tr>
-				<tr>
-					<th colspan="3"><h3>Utilities</h3></th>
-				</tr>
-				<tr class="check">
-					<td class="check">
-							<input type="checkbox" id="Selectors" deps="Element" name="files[]" value="Utilities/Selectors.js"'.(in_array("Utilities/Selectors.js", $formVars)?' checked="1"':'').' />
-					</td>
-					<td class="name">Selectors</td>
-					<td class="description">
-						<p>'.$LANG->getLL('mootools.component.utilities.selectors').'</p>
-					</td>
-				</tr>
-				<tr class="check">
-					<td class="check">
-							<input type="checkbox" id="DomReady" deps="Element.Event" name="files[]" value="Utilities/DomReady.js"'.(in_array("Utilities/DomReady.js", $formVars)?' checked="1"':'').' />
-					</td>
-					<td class="name">DomReady</td>
-					<td class="description">
-						<p>'.$LANG->getLL('mootools.component.utilities.domready').'</p>
-					</td>
-				</tr>
-				<tr class="check">
-					<td class="check">
-							<input type="checkbox" id="JSON" deps="Array,String,Function,Number,Hash" name="files[]" value="Utilities/JSON.js"'.(in_array("Utilities/JSON.js", $formVars)?' checked="1"':'').' />
-					</td>
-					<td class="name">JSON</td>
-					<td class="description">
-						<p>'.$LANG->getLL('mootools.component.utilities.json').'</p>
-					</td>
-				</tr>
-				<tr class="check">
-					<td class="check">
-							<input type="checkbox" id="Cookie" deps="Browser,Class.Extras" name="files[]" value="Utilities/Cookie.js"'.(in_array("Utilities/Cookie.js", $formVars)?' checked="1"':'').' />
-					</td>
-					<td class="name">Cookie</td>
-					<td class="description">
-						<p>'.$LANG->getLL('mootools.component.utilities.cookie').'</p>
-					</td>
-				</tr>
-				<tr class="check">
-					<td class="check">
-							<input type="checkbox" id="Swiff" deps="Class.Extras" name="files[]" value="Utilities/Swiff.js"'.(in_array("Utilities/Swiff.js", $formVars)?' checked="1"':'').' />
-					</td>
-					<td class="name">Swiff</td>
-					<td class="description">
-						<p>'.$LANG->getLL('mootools.component.utilities.swiff').'</p>
-					</td>
-				</tr>
-				<tr class="check">
-					<td class="check">
-							<input type="checkbox" id="Hash.Cookie" deps="JSON,Cookie" name="files[]" value="Utilities/Hash.Cookie.js"'.(in_array("Utilities/Hash.Cookie.js", $formVars)?' checked="1"':'').' />
-					</td>
-					<td class="name">Hash.Cookie</td>
-					<td class="description">
-						<p>'.$LANG->getLL('mootools.component.utilities.hash.cookie').'</p>
-					</td>
-				</tr>
-				<tr class="check">
-					<td class="check">
-							<input type="checkbox" id="Color" deps="Array,Function,Number,String,Hash" name="files[]" value="Utilities/Color.js"'.(in_array("Utilities/Color.js", $formVars)?' checked="1"':'').' />
-					</td>
-					<td class="name">Color</td>
-					<td class="description">
-						<p>'.$LANG->getLL('mootools.component.utilities.color').'</p>
-					</td>
-				</tr>
-				<tr class="check">
-					<td class="check">
-							<input type="checkbox" id="Group" deps="Class.Extra" name="files[]" value="Utilities/Group.js"'.(in_array("Utilities/Group.js", $formVars)?' checked="1"':'').' />
-					</td>
-					<td class="name">Group</td>
-					<td class="description">
-						<p>'.$LANG->getLL('mootools.component.utilities.group').'</p>
-					</td>
-				</tr>
-				<tr class="check">
-					<td class="check">
-							<input type="checkbox" id="Assets" deps="Element.Event" name="files[]" value="Utilities/Assets.js"'.(in_array("Utilities/Assets.js", $formVars)?' checked="1"':'').' />
-					</td>
-					<td class="name">Assets</td>
-					<td class="description">
-						<p>'.$LANG->getLL('mootools.component.utilities.assets').'</p>
-					</td>
-				</tr>
-				<tr>
-					<th colspan="3"><h3>Fx</h3></th>
-				</tr>
-				<tr class="check">
-					<td class="check">
-							<input type="checkbox" id="Fx" deps="Class.Extras" name="files[]" value="Fx/Fx.js"'.(in_array("Fx/Fx.js", $formVars)?' checked="1"':'').' />
-					</td>
-					<td class="name">Fx</td>
-					<td class="description">
-						<p>'.$LANG->getLL('mootools.component.fx.fx').'</p>
-					</td>
-				</tr>
-				<tr class="check">
-					<td class="check">
-							<input type="checkbox" id="Fx.CSS" deps="Fx,Element.Style" name="files[]" value="Fx/Fx.CSS.js"'.(in_array("Fx/Fx.CSS.js", $formVars)?' checked="1"':'').' />
-					</td>
-					<td class="name">Fx.CSS</td>
-					<td class="description">
-						<p>'.$LANG->getLL('mootools.component.fx.fx.css').'</p>
-					</td>
-				</tr>
-				<tr class="check">
-					<td class="check">
-							<input type="checkbox" id="Fx.Tween" deps="Fx.CSS" name="files[]" value="Fx/Fx.Tween.js"'.(in_array("Fx/Fx.Tween.js", $formVars)?' checked="1"':'').' />
-					</td>
-					<td class="name">Fx.Tween</td>
-					<td class="description">
-						<p>'.$LANG->getLL('mootools.component.fx.fx.tween').'</p>
-					</td>
-				</tr>
-				<tr class="check">
-					<td class="check">
-							<input type="checkbox" id="Fx.Morph" deps="Fx.CSS" name="files[]" value="Fx/Fx.Morph.js"'.(in_array("Fx/Fx.Morph.js", $formVars)?' checked="1"':'').' />
-					</td>
-					<td class="name">Fx.Morph</td>
-					<td class="description">
-						<p>'.$LANG->getLL('mootools.component.fx.fx.morph').'</p>
-					</td>
-				</tr>
-				<tr class="check">
-					<td class="check">
-							<input type="checkbox" id="Fx.Transitions" deps="Fx" name="files[]" value="Fx/Fx.Transitions.js"'.(in_array("Fx/Fx.Transitions.js", $formVars)?' checked="1"':'').' />
-					</td>
-					<td class="name">Fx.Transitions</td>
-					<td class="description">
-						<p>'.$LANG->getLL('mootools.component.fx.fx.transitions').'</p>
-					</td>
-				</tr>
-				<tr class="check">
-					<td class="check">
-							<input type="checkbox" id="Fx.Slide" deps="Element.Style,Fx" name="files[]" value="Fx/Fx.Slide.js"'.(in_array("Fx/Fx.Slide.js", $formVars)?' checked="1"':'').' />
-					</td>
-					<td class="name">Fx.Slide</td>
-					<td class="description">
-						<p>'.$LANG->getLL('mootools.component.fx.fx.slide').'</p>
-					</td>
-				</tr>
-				<tr class="check">
-					<td class="check">
-							<input type="checkbox" id="Fx.Scroll" deps="Element.Dimensions,Element.Event,Fx" name="files[]" value="Fx/Fx.Scroll.js"'.(in_array("Fx/Fx.Scroll.js", $formVars)?' checked="1"':'').' />
-					</td>
-					<td class="name">Fx.Scroll</td>
-					<td class="description">
-						<p>'.$LANG->getLL('mootools.component.fx.fx.scroll').'</p>
-					</td>
-				</tr>
-				<tr class="check">
-					<td class="check">
-							<input type="checkbox" id="Fx.Elements" deps="Fx.CSS" name="files[]" value="Fx/Fx.Elements.js"'.(in_array("Fx/Fx.Elements.js", $formVars)?' checked="1"':'').' />
-					</td>
-					<td class="name">Fx.Elements</td>
-					<td class="description">
-						<p>'.$LANG->getLL('mootools.component.fx.fx.elements').'</p>
-					</td>
-				</tr>
-				<tr>
-					<th colspan="3"><h3>Request</h3></th>
-				</tr>
-				<tr class="check">
-					<td class="check">
-							<input type="checkbox" id="Request" deps="Class.Extras,Element" name="files[]" value="Request/Request.js"'.(in_array("Request/Request.js", $formVars)?' checked="1"':'').' />
-					</td>
-					<td class="name">Request</td>
-					<td class="description">
-						<p>'.$LANG->getLL('mootools.component.request.request').'</p>
-					</td>
-				</tr>
-				<tr class="check">
-					<td class="check">
-							<input type="checkbox" id="Request.HTML" deps="Request" name="files[]" value="Request/Request.HTML.js"'.(in_array("Request/Request.HTML.js", $formVars)?' checked="1"':'').' />
-					</td>
-					<td class="name">Request.HTML</td>
-					<td class="description">
-						<p>'.$LANG->getLL('mootools.component.request.request.html').'</p>
-					</td>
-				</tr>
-				<tr class="check">
-					<td class="check">
-							<input type="checkbox" id="Request.JSON" deps="Request,JSON" name="files[]" value="Request/Request.JSON.js"'.(in_array("Request/Request.JSON.js", $formVars)?' checked="1"':'').' />
-					</td>
-					<td class="name">Request.JSON</td>
-					<td class="description">
-						<p>'.$LANG->getLL('mootools.component.request.request.json').'</p>
-					</td>
-				</tr>
-				<tr>
-					<th colspan="3"><h3>Drag</h3></th>
-				</tr>
-				<tr class="check">
-					<td class="check">
-							<input type="checkbox" id="Drag" deps="Core,Class.Extras,Element.Event,Element.Style" name="files[]" value="Drag/Drag.js"'.(in_array("Drag/Drag.js", $formVars)?' checked="1"':'').' />
-					</td>
-					<td class="name">Drag</td>
-					<td class="description">
-						<p>'.$LANG->getLL('mootools.component.drag.drag').'</td>
-				</tr>
-				<tr class="check">
-					<td class="check">
-							<input type="checkbox" id="Drag.Move" deps="Drag,Element.Dimensions" name="files[]" value="Drag/Drag.Move.js"'.(in_array("Drag/Drag.Move.js", $formVars)?' checked="1"':'').' />
-					</td>
-					<td class="name">Drag.Move</td>
-					<td class="description">
-						<p>'.$LANG->getLL('mootools.component.drag.drag.move').'</p>
-					</td>
-				</tr>
-				<tr>
-					<th colspan="3"><h3>Interface</h3></th>
-				</tr>
-				<tr class="check">
-					<td class="check">
-							<input type="checkbox" id="Sortables" deps="Drag.Move" name="files[]" value="Interface/Sortables.js"'.(in_array("Interface/Sortables.js", $formVars)?' checked="1"':'').' />
-					</td>
-					<td class="name">Sortables</td>
-					<td class="description">
-						<p>'.$LANG->getLL('mootools.component.interface.sortables').'</p>
-					</td>
-				</tr>
-				<tr class="check">
-					<td class="check">
-							<input type="checkbox" id="Tips" deps="Class.Extras,Element.Event,Element.Style,Element.Dimensions" name="files[]" value="Interface/Tips.js"'.(in_array("Interface/Tips.js", $formVars)?' checked="1"':'').' />
-					</td>
-					<td class="name">Tips</td>
-					<td class="description">
-						<p>'.$LANG->getLL('mootools.component.interface.tips').'</p>
-					</td>
-				</tr>
-				<tr class="check">
-					<td class="check">
-							<input type="checkbox" id="SmoothScroll" deps="Fx.Scroll" name="files[]" value="Interface/SmoothScroll.js"'.(in_array("Interface/SmoothScroll.js", $formVars)?' checked="1"':'').' />
-					</td>
-					<td class="name">SmoothScroll</td>
-					<td class="description">
-						<p>'.$LANG->getLL('mootools.component.interface.smoothscroll').'</p>
-					</td>
-				</tr>
-				<tr class="check">
-					<td class="check">
-							<input type="checkbox" id="Slider" deps="Drag,Element.Dimensions" name="files[]" value="Interface/Slider.js"'.(in_array("Interface/Slider.js", $formVars)?' checked="1"':'').' />
-					</td>
-					<td class="name">Slider</td>
-					<td class="description">
-						<p>'.$LANG->getLL('mootools.component.interface.slider').'</p>
-					</td>
-				</tr>
-				<tr class="check">
-					<td class="check">
-							<input type="checkbox" id="Scroller" deps="Class.Extras,Element.Event,Element.Dimensions" name="files[]" value="Interface/Scroller.js"'.(in_array("Interface/Scroller.js", $formVars)?' checked="1"':'').' />
-					</td>
-					<td class="name">Scroller</td>
-					<td class="description">
-						<p>'.$LANG->getLL('mootools.component.interface.scroller').'</p>
-					</td>
-				</tr>
-				<tr class="check last">
-					<td class="check">
-							<input type="checkbox" id="Accordion" deps="Fx.Elements,Element.Event" name="files[]" value="Interface/Accordion.js"'.(in_array("Interface/Accordion.js", $formVars)?' checked="1"':'').' />
-					</td>
-					<td class="name">Accordion</td>
-					<td class="description">
-						<p>'.$LANG->getLL('mootools.component.interface.accordion').'</p>
-					</td>
-				</tr>
-			</table>
-		</div>
+
+       <div id="download">
+       <table id="table_head_mootools-core" class="download lib_table">
+        <tr class="folder library">
+          <th>
+            <div style="position: relative">
+              <div class="lib_check_container">
+                <div class="check lib_check" id="include_mootools-core">
+                  <input type="checkbox" name="include_mootools-core" value="true" checked />
+                </div>
+                '.$LANG->getLL('mootools.component.includelibary').'
+              </div>
+              <h2>Mootools 1.2.2</h2>
+            </div>
+          </th>
+        </tr>
+      </table>
+
+      <div id="slider_mootools-core" class="lib_slider">
+        <table id="download_mootools-core" class="download">
+          <tr class="folder"> 
+            <th colspan="3">
+              <h3>Core</h3>
+            </th>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Core" deps="Core"> 
+                <input type="checkbox" name="mootools-core_files[]" value="Core/Core.js"'.(in_array("Core/Core.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Core</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.core.core').'</p>
+            </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Browser" deps="Core"> 
+                <input type="checkbox" name="mootools-core_files[]" value="Core/Browser.js"'.(in_array("Core/Browser.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Browser</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.core.browser').'</p>
+            </td>
+          </tr>
+          <tr class="folder"> 
+            <th colspan="3">
+              <h3>Native</h3>
+            </th>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Array" deps="Core"> 
+                <input type="checkbox" name="mootools-core_files[]" value="Native/Array.js"'.(in_array("Native/Array.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Array</td>
+            <td class="description"> 
+             <p>'.$LANG->getLL('mootools.component.native.array').'</p>
+           </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Function" deps="Core"> 
+                <input type="checkbox" name="mootools-core_files[]" value="Native/Function.js"'.(in_array("Native/Function.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Function</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.native.function').'</p>
+            </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Number" deps="Core"> 
+                <input type="checkbox" name="mootools-core_files[]" value="Native/Number.js"'.(in_array("Native/Number.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Number</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.native.number').'</p>
+           </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="String" deps="Core"> 
+                <input type="checkbox" name="mootools-core_files[]" value="Native/String.js"'.(in_array("Native/String.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">String</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.native.string').'</p>
+            </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Hash" deps="Core"> 
+                <input type="checkbox" name="mootools-core_files[]" value="Native/Hash.js"'.(in_array("Native/Hash.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Hash</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.native.hash').'</p>
+            </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Event" deps="Browser,Array,Function,Number,String,Hash"> 
+                <input type="checkbox" name="mootools-core_files[]" value="Native/Event.js"'.(in_array("Native/Event.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Event</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.native.event').'</p>
+            </td>
+          </tr>
+          <tr class="folder"> 
+            <th colspan="3">
+              <h3>Class</h3>
+            </th>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Class" deps="Core,Array,String,Function,Number,Hash,Browser"> 
+                <input type="checkbox" name="mootools-core_files[]" value="Class/Class.js"'.(in_array("Class/Class.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Class</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.class.class').'</p>
+            </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Class.Extras" deps="Class"> 
+                <input type="checkbox" name="mootools-core_files[]" value="Class/Class.Extras.js"'.(in_array("Class/Class.Extras.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Class.Extras</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.class.class.extras').'</p>
+            </td>
+          </tr>
+          <tr class="folder"> 
+            <th colspan="3">
+              <h3>Element</h3>
+            </th>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Element" deps="Browser,Array,String,Function,Number,Hash"> 
+                <input type="checkbox" name="mootools-core_files[]" value="Element/Element.js"'.(in_array("Element/Element.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Element</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.element.element').'</p>
+            </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Element.Event" deps="Element,Event"> 
+                <input type="checkbox" name="mootools-core_files[]" value="Element/Element.Event.js"'.(in_array("Element/Element.Event.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Element.Event</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.element.element.event').'</p>
+            </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Element.Style" deps="Element"> 
+                <input type="checkbox" name="mootools-core_files[]" value="Element/Element.Style.js"'.(in_array("Element/Element.Style.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Element.Style</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.element.element.style').'</p>
+            </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Element.Dimensions" deps="Element"> 
+                <input type="checkbox" name="mootools-core_files[]" value="Element/Element.Dimensions.js"'.(in_array("Element/Element.Dimensions.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Element.Dimensions</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.element.element.dimensions').'</p>
+            </td>
+          </tr>
+          <tr class="folder"> 
+            <th colspan="3">
+              <h3>Utilities</h3>
+            </th>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Selectors" deps="Element"> 
+                <input type="checkbox" name="mootools-core_files[]" value="Utilities/Selectors.js"'.(in_array("Utilities/Selectors.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Selectors</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.utilities.selectors').'</p>
+            </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Domready" deps="Element.Event"> 
+                <input type="checkbox" name="mootools-core_files[]" value="Utilities/Domready.js"'.(in_array("Utilities/Domready.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Domready</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.utilities.domready').'</p>
+            </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="JSON" deps="Array,String,Function,Number,Hash"> 
+                <input type="checkbox" name="mootools-core_files[]" value="Utilities/JSON.js"'.(in_array("Utilities/JSON.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">JSON</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.utilities.json').'</p>
+            </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Cookie" deps="Browser,Class,Class.Extras"> 
+                <input type="checkbox" name="mootools-core_files[]" value="Utilities/Cookie.js"'.(in_array("Utilities/Cookie.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Cookie</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.utilities.cookie').'</p>
+            </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Swiff" deps="Class.Extras"> 
+                <input type="checkbox" name="mootools-core_files[]" value="Utilities/Swiff.js"'.(in_array("Utilities/Swiff.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Swiff</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.utilities.swiff').'</p>
+            </td>
+          </tr>
+          <tr class="folder"> 
+            <th colspan="3">
+              <h3>Fx</h3>
+            </th>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Fx" deps="Class.Extras"> 
+                <input type="checkbox" name="mootools-core_files[]" value="Fx/Fx.js"'.(in_array("Fx/Fx.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Fx</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.fx.fx').'</p>
+            </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Fx.CSS" deps="Fx,Element.Style"> 
+                <input type="checkbox" name="mootools-core_files[]" value="Fx/Fx.CSS.js"'.(in_array("Fx/Fx.CSS.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Fx.CSS</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.fx.fx.css').'</p>
+            </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Fx.Tween" deps="Fx.CSS"> 
+                <input type="checkbox" name="mootools-core_files[]" value="Fx/Fx.Tween.js"'.(in_array("Fx/Fx.Tween.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Fx.Tween</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.fx.fx.tween').'</p>
+            </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Fx.Morph" deps="Fx.CSS"> 
+                <input type="checkbox" name="mootools-core_files[]" value="Fx/Fx.Morph.js"'.(in_array("Fx/Fx.Morph.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Fx.Morph</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.fx.fx.morph').'</p>
+            </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Fx.Transitions" deps="Fx"> 
+                <input type="checkbox" name="mootools-core_files[]" value="Fx/Fx.Transitions.js"'.(in_array("Fx/Fx.Transitions.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Fx.Transitions</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.fx.fx.transitions').'</p>
+            </td>
+          </tr>
+          <tr class="folder"> 
+            <th colspan="3">
+              <h3>Request</h3>
+            </th>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Request" deps="Class.Extras"> 
+                <input type="checkbox" name="mootools-core_files[]" value="Request/Request.js"'.(in_array("Request/Request.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Request</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.request.request').'</p>
+            </td>
+         </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Request.HTML" deps="Request,Element"> 
+                <input type="checkbox" name="mootools-core_files[]" value="Request/Request.HTML.js"'.(in_array("Request/Request.HTML.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Request.HTML</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.request.request.html').'</p>
+            </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Request.JSON" deps="Request,JSON"> 
+                <input type="checkbox" name="mootools-core_files[]" value="Request/Request.JSON.js"'.(in_array("Request/Request.JSON.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Request.JSON</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.request.request.json').'</p>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <table id="table_head_mootools-more" class="download lib_table">
+        <tr class="folder library">
+          <th colspan="5">
+            <div style="position: relative">
+              <div class="lib_check_container">
+                <div class="check lib_check" id="include_mootools-more">
+                  <input type="checkbox" name="include_mootools-more" value="true"/>
+                </div>
+                '.$LANG->getLL('mootools.component.includelibary').'
+              </div>
+              <h2>Mootools More 1.2.2.2</h2>
+            </div>
+          </th>
+        </tr>
+      </table>
+
+      <div id="slider_mootools-more" class="lib_slider">
+        <table id="download_mootools-more" class="download">
+          <tr class="folder"> 
+            <th colspan="3"> 
+              <h3>Core</h3>
+            </th>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="More" deps="Core"> 
+                <input type="checkbox" name="mootools-more_files[]" value="Core/More.js"'.(in_array("Core/More.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">More</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.core.more').'</p>
+            </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Lang" deps="More,Class.Extras"> 
+                <input type="checkbox" name="mootools-more_files[]" value="Core/Lang.js"'.(in_array("Core/Lang.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Lang</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.core.lang').'</p>
+            </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Log" deps="Class"> 
+                <input type="checkbox" name="mootools-more_files[]" value="Core/Log.js"'.(in_array("Core/Log.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Log</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.core.log').'</p>
+            </td>
+          </tr>
+          <tr class="folder"> 
+            <th colspan="3"> 
+              <h3>Class</h3>
+            </th>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Class.Refactor" deps="More,Class"> 
+                <input type="checkbox" name="mootools-more_files[]" value="Class/Class.Refactor.js"'.(in_array("Class/Class.Refactor.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Class.Refactor</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.class.refactor').'</p>
+            </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Class.Binds" deps="More,Class"> 
+                <input type="checkbox" name="mootools-more_files[]" value="Class/Class.Binds.js"'.(in_array("Class/Class.Binds.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Class.Binds</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.class.binds').'</p>
+            </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Class.Occlude" deps="More,Class,Element"> 
+                <input type="checkbox" name="mootools-more_files[]" value="Class/Class.Occlude.js"'.(in_array("Class/Class.Occlude.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Class.Occlude</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.class.occlude').'</p>
+            </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Chain.Wait" deps="More,Class.Extras"> 
+                <input type="checkbox" name="mootools-more_files[]" value="Class/Chain.Wait.js"'.(in_array("Class/Chain.Wait.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Chain.Wait</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.class.chain.wait').'</p>
+            </td>
+          </tr>
+          <tr class="folder"> 
+            <th colspan="3"> 
+              <h3>Native</h3>
+            </th>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Array.Extras" deps="More,Core,Array"> 
+                <input type="checkbox" name="mootools-more_files[]" value="Native/Array.Extras.js"'.(in_array("Native/Array.Extras.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Array.Extras</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.native.array.extras').'</p>
+            </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Date" deps="More,Core,String,Number,Array,String.Extras,Lang,Date.English.US"> 
+                <input type="checkbox" name="mootools-more_files[]" value="Native/Date.js"'.(in_array("Native/Date.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Date</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.native.date').'</p>
+            </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Date.Extras" deps="More,Date"> 
+                <input type="checkbox" name="mootools-more_files[]" value="Native/Date.Extras.js"'.(in_array("Native/Date.Extras.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Date.Extras</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.native.date.extras').'</p>
+            </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Hash.Extras" deps="More,Core"> 
+                <input type="checkbox" name="mootools-more_files[]" value="Native/Hash.Extras.js"'.(in_array("Native/Hash.Extras.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Hash.Extras</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.native.hash.extras').'</p>
+            </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="String.Extras" deps="More,String,Array,Hash.Extras"> 
+                <input type="checkbox" name="mootools-more_files[]" value="Native/String.Extras.js"'.(in_array("Native/String.Extras.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">String.Extras</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.native.string.extras').'</p>
+            </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="String.QueryString" deps="More,String,Array"> 
+                <input type="checkbox" name="mootools-more_files[]" value="Native/String.QueryString.js"'.(in_array("Native/String.QueryString.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">String.QueryString</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.native.string.querystring').'</p>
+            </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="URI" deps="More,Function,Array,Hash,Class.Refactor"> 
+                <input type="checkbox" name="mootools-more_files[]" value="Native/URI.js"'.(in_array("Native/URI.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">URI</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.native.uri').'</p>
+            </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="URI.Relative" deps="URI"> 
+                <input type="checkbox" name="mootools-more_files[]" value="Native/URI.Relative.js"'.(in_array("Native/URI.Relative.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">URI.Relative</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.native.uri.relative').'</p>
+            </td>
+          </tr>
+          <tr class="folder"> 
+            <th colspan="3"> 
+              <h3>Element</h3>
+            </th>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Element.Forms" deps="More,Element"> 
+                <input type="checkbox" name="mootools-more_files[]" value="Element/Element.Forms.js"'.(in_array("Element/Element.Forms.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Element.Forms</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.element.element.forms').'</p>
+            </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Element.Measure" deps="More,Element.Style"> 
+                <input type="checkbox" name="mootools-more_files[]" value="Element/Element.Measure.js"'.(in_array("Element/Element.Measure.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Element.Measure</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.element.element.measure').'</p>
+            </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Element.Pin" deps="More,Element.Event,Element.Dimensions,Element.Style"> 
+                <input type="checkbox" name="mootools-more_files[]" value="Element/Element.Pin.js"'.(in_array("Element/Element.Pin.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Element.Pin</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.element.element.pin').'</p>
+            </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Element.Position" deps="More,Element.Dimensions,Element.Measure"> 
+                <input type="checkbox" name="mootools-more_files[]" value="Element/Element.Position.js"'.(in_array("Element/Element.Position.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Element.Position</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.element.element.position').'</p>
+            </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Element.Shortcuts" deps="More,Element.Style"> 
+                <input type="checkbox" name="mootools-more_files[]" value="Element/Element.Shortcuts.js"'.(in_array("Element/Element.Shortcuts.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Element.Shortcuts</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.element.element.shortcuts').'</p>
+            </td>
+          </tr>
+          <tr class="folder"> 
+            <th colspan="3"> 
+              <h3>Forms</h3>
+            </th>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="FormValidator" deps="More,Lang,Class.Extras,Class.Binds,Selectors,Element.Event,Element.Style,JSON,Date,Element.Forms,FormValidator.English"> 
+                <input type="checkbox" name="mootools-more_files[]" value="Forms/FormValidator.js"'.(in_array("Forms/FormValidator.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">FormValidator</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.forms.formvalidator').'</p>
+            </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="FormValidator.Inline" deps="More,FormValidator"> 
+                <input type="checkbox" name="mootools-more_files[]" value="Forms/FormValidator.Inline.js"'.(in_array("Forms/FormValidator.Inline.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">FormValidator.Inline</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.forms.formvalidator.inline').'</p>
+            </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="FormValidator.Extras" deps="More,FormValidator"> 
+                <input type="checkbox" name="mootools-more_files[]" value="Forms/FormValidator.Extras.js"'.(in_array("Forms/FormValidator.Extras.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">FormValidator.Extras</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.forms.formvalidator.extras').'</p>
+            </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="OverText" deps="More,Class.Extras,Element.Event,Class.Binds,Class.Occlude,Element.Position,Element.Shortcuts"> 
+                <input type="checkbox" name="mootools-more_files[]" value="Forms/OverText.js"'.(in_array("Forms/OverText.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">OverText</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.forms.overtext').'</p>
+            </td>
+          </tr>
+          <tr class="folder"> 
+            <th colspan="3"> 
+              <h3>Fx</h3>
+            </th>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Fx.Elements" deps="More,Fx.CSS"> 
+                <input type="checkbox" name="mootools-more_files[]" value="Fx/Fx.Elements.js"'.(in_array("Fx/Fx.Elements.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Fx.Elements</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.fx.fx.elements').'</p>
+            </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Fx.Accordion" deps="More,Fx.Elements,Element.Event"> 
+                <input type="checkbox" name="mootools-more_files[]" value="Fx/Fx.Accordion.js"'.(in_array("Fx/Fx.Accordion.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Fx.Accordion</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.interface.accordion').'</p>
+            </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Fx.Move" deps="More,Fx.Morph,Element.Position"> 
+                <input type="checkbox" name="mootools-more_files[]" value="Fx/Fx.Move.js"'.(in_array("Fx/Fx.Move.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Fx.Move</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.fx.move').'</p>
+            </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Fx.Reveal" deps="More,Fx.Morph,Element.Shortcuts,Element.Measure"> 
+                <input type="checkbox" name="mootools-more_files[]" value="Fx/Fx.Reveal.js"'.(in_array("Fx/Fx.Reveal.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Fx.Reveal</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.fx.reveal').'</p>
+            </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Fx.Scroll" deps="More,Fx,Element.Event,Element.Dimensions"> 
+                <input type="checkbox" name="mootools-more_files[]" value="Fx/Fx.Scroll.js"'.(in_array("Fx/Fx.Scroll.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Fx.Scroll</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.fx.fx.scroll').'</p>
+            </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Fx.Slide" deps="More,Fx,Element.Style"> 
+                <input type="checkbox" name="mootools-more_files[]" value="Fx/Fx.Slide.js"'.(in_array("Fx/Fx.Slide.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Fx.Slide</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.fx.fx.slide').'</p>
+            </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Fx.SmoothScroll" deps="More,Fx.Scroll,Selectors"> 
+                <input type="checkbox" name="mootools-more_files[]" value="Fx/Fx.SmoothScroll.js"'.(in_array("Fx/Fx.SmoothScroll.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Fx.SmoothScroll</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.interface.smoothscroll').'</p>
+            </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Fx.Sort" deps="More,Fx.Elements,Element.Dimensions,Element.Measure"> 
+                <input type="checkbox" name="mootools-more_files[]" value="Fx/Fx.Sort.js"'.(in_array("Fx/Fx.Sort.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Fx.Sort</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.fx.sort').'</p>
+            </td>
+          </tr>
+          <tr class="folder"> 
+            <th colspan="3"> 
+              <h3>Drag</h3>
+            </th>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Drag" deps="More,Class.Extras,Element.Event,Element.Style"> 
+                <input type="checkbox" name="mootools-more_files[]" value="Drag/Drag.js"'.(in_array("Drag/Drag.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Drag</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.drag.drag').'</p>
+            </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Drag.Move" deps="More,Drag,Element.Dimensions"> 
+                <input type="checkbox" name="mootools-more_files[]" value="Drag/Drag.Move.js"'.(in_array("Drag/Drag.Move.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Drag.Move</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.drag.drag.move').'</p>
+            </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Slider" deps="More,Class.Binds,Drag,Element.Dimensions"> 
+                <input type="checkbox" name="mootools-more_files[]" value="Drag/Slider.js"'.(in_array("Drag/Slider.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Slider</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.interface.slider').'</p>
+            </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Sortables" deps="More,Drag.Move"> 
+                <input type="checkbox" name="mootools-more_files[]" value="Drag/Sortables.js"'.(in_array("Drag/Sortables.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Sortables</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.interface.sortables').'</p>
+            </td>
+          </tr>
+          <tr class="folder"> 
+            <th colspan="3"> 
+              <h3>Request</h3>
+            </th>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Request.JSONP" deps="More,Log,Browser,Element,Request,Class.Extras"> 
+                <input type="checkbox" name="mootools-more_files[]" value="Request/Request.JSONP.js"'.(in_array("Request/Request.JSONP.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Request.JSONP</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.request.jsonp').'</p>
+            </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Request.Queue" deps="More,Request"> 
+                <input type="checkbox" name="mootools-more_files[]" value="Request/Request.Queue.js"'.(in_array("Request/Request.Queue.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Request.Queue</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.request.queue').'</p>
+            </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Request.Periodical" deps="More,Request,Class.Refactor"> 
+                <input type="checkbox" name="mootools-more_files[]" value="Request/Request.Periodical.js"'.(in_array("Request/Request.Periodical.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Request.Periodical</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.request.periodical').'</p>
+            </td>
+          </tr>
+          <tr class="folder"> 
+            <th colspan="3"> 
+              <h3>Utilities</h3>
+            </th>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Assets" deps="More,Element.Event"> 
+                <input type="checkbox" name="mootools-more_files[]" value="Utilities/Assets.js"'.(in_array("Utilities/Assets.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Assets</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.utilities.assets').'</p>
+            </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Color" deps="More,Core,Array,String,Function,Number,Hash"> 
+                <input type="checkbox" name="mootools-more_files[]" value="Utilities/Color.js"'.(in_array("Utilities/Color.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Color</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.utilities.color').'</p>
+            </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Group" deps="More,Class.Extras"> 
+                <input type="checkbox" name="mootools-more_files[]" value="Utilities/Group.js"'.(in_array("Utilities/Group.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Group</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.utilities.group').'</p>
+            </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Hash.Cookie" deps="More,Class.Extras,Cookie,JSON"> 
+                <input type="checkbox" name="mootools-more_files[]" value="Utilities/Hash.Cookie.js"'.(in_array("Utilities/Hash.Cookie.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Hash.Cookie</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.utilities.hash.cookie').'</p>
+            </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="IframeShim" deps="More,Element.Position,Element.Event,Element.Style,Class.Extras,Class.Occlude"> 
+                <input type="checkbox" name="mootools-more_files[]" value="Utilities/IframeShim.js"'.(in_array("Utilities/IframeShim.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">IframeShim</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.utilities.iframshim').'</p>
+            </td>
+          </tr>
+          <tr class="folder"> 
+            <th colspan="3"> 
+              <h3>Interface</h3>
+            </th>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Scroller" deps="More,Class.Extras,Element.Event,Element.Dimensions"> 
+                <input type="checkbox" name="mootools-more_files[]" value="Interface/Scroller.js"'.(in_array("Interface/Scroller.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Scroller</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.interface.scroller').'</p>
+            </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Tips" deps="More,Class.Extras,Element.Event,Element.Style,Element.Dimensions,Element.Measure"> 
+                <input type="checkbox" name="mootools-more_files[]" value="Interface/Tips.js"'.(in_array("Interface/Tips.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Tips</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.interface.tips').'</p>
+            </td>
+          </tr>
+          <tr class="folder"> 
+            <th colspan="3"> 
+              <h3>Localization</h3>
+            </th>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="Date.English.US" deps="More,Lang"> 
+                <input type="checkbox" name="mootools-more_files[]" value="Localization/Date.English.US.js"'.(in_array("Localization/Date.English.US.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">Date.English.US</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.localization.date.english.us').'</p>
+            </td>
+          </tr>
+          <tr class="option check"> 
+            <td class="check"> 
+              <div class="check " id="FormValidator.English" deps="More,Lang"> 
+                <input type="checkbox" name="mootools-more_files[]" value="Localization/FormValidator.English.js"'.(in_array("Localization/FormValidator.English.js", $formVars)?' checked="1"':'').' />
+              </div>
+            </td>
+            <td class="name">FormValidator.English</td>
+            <td class="description"> 
+              <p>'.$LANG->getLL('mootools.component.localization.formvalidator.english').'</p>
+            </td>
+          </tr>
+        </table>
+      </div>
+
 		<h2 class="options compression-options"><a href= "#" id="compression-tog">'.$LANG->getLL('mootools.compression').'</a></h2>
-			<table id="download-options">
-				<tr class="radio">
+		<div id="compression">
+			<table id="compression-options" class="compression options">
+				<tr class="option">
 					<td class="check">
-							<input type="radio" name="compression" value="packer" checked="1" />
+						<div class="check">
+							<input type="radio" name="compression" value="packer" />
+						</div>
 					</td>
 					<td class="name">'.$LANG->getLL('mootools.compression.packer.name').'</td>
 					<td class="description">'.$LANG->getLL('mootools.compression.packer.description').'</td>
 				</tr>
-				<tr class="radio">
+				<tr class="option">
 					<td class="check">
+						<div class="check">
 							<input type="radio" name="compression" value="jsmin" />
+						</div>
 					</td>
 					<td class="name">'.$LANG->getLL('mootools.compression.jsmin.name').'</td>
 					<td class="description">'.$LANG->getLL('mootools.compression.jsmin.description').'</td>
 				</tr>
-				<tr class="radio">
+				<tr class="option">
 					<td class="check">
+						<div class="check">
 							<input type="radio" name="compression" value="nodocs" />	
+						</div>
 					</td>
 					<td class="name">'.$LANG->getLL('mootools.compression.nodocs.name').'</td>
 					<td class="description">'.$LANG->getLL('mootools.compression.nodocs.description').'</td>
 				</tr>
-				<tr class="radio last">
+				<tr class="option">
 					<td class="check">
+						<div class="check">
 							<input type="radio" name="compression" value="none" />
+						</div>
 					</td>
 					<td class="name">'.$LANG->getLL('mootools.compression.none.name').'</td>
-					<td class="description">'.$LANG->getLL('mootools.compression.none.description').'.</td>
+					<td class="description">'.$LANG->getLL('mootools.compression.none.description').'</td>
 				</tr>
 			</table>
-		<input type="hidden" name="version" value="1.2.1" />
+		</div>
+		<input type="hidden" name="version" value="1.2.2" />
 		<table>
 			<tr>
 				<td><p class="submit"><input type="button" id="select_all" name="select_all" value="'.$LANG->getLL('mootools.button.selectall').'" /></p></td>
 				<td><p class="submit"><input type="button" id="select_none" name="select_none" value="'.$LANG->getLL('mootools.button.selectnone').'" /></p></td>
 				<td><p class="submit"><input type="submit" value="'.$LANG->getLL('mootools.button.create').'" /></p></td>
 			</tr>
-		</table>';
+		</table>
+		</div>';
 					return $out;
 				}
 
