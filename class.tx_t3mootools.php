@@ -30,8 +30,8 @@
 * @author Peter Klein <peter@umloud.dk>
 */
 
-if (file_exists(t3lib_extMgm::siteRelPath('t3mootools').'res/mootools_v1.2.1.js')) {
-	define('T3MOOTOOLS', 'mootools_v1.2.1.js');
+if (file_exists(t3lib_extMgm::siteRelPath('t3mootools').'res/mootools_v1.2.2.js')) {
+	define('T3MOOTOOLS', 'mootools_v1.2.2.js');
 }
 
 /**
@@ -82,7 +82,9 @@ class tx_t3mootools {
 	 * @return	void
 	 */
 	function addMooJS() {
-		$GLOBALS['TSFE']->additionalHeaderData['mootools'] = tx_t3mootools::getMooJS();
+		if ($GLOBALS['TSFE']->additionalHeaderData['mootools']=='') {
+			$GLOBALS['TSFE']->additionalHeaderData['mootools'] = tx_t3mootools::getMooJS();
+		}
 	}
 
 	/**
@@ -134,11 +136,9 @@ class tx_t3mootools {
 		if ($GLOBALS['TSFE']->additionalHeaderData['mootools']=='') tx_t3mootools::addMooJS();
 
 		// Append additional javascript to existing headerData.
-        $jsdata = $this->cObj->stdWrap($conf['jsdata'], $conf['jsdata.']);
-        $jsfile = preg_replace('|^'.PATH_site.'|i','',t3lib_div::getFileAbsFileName($this->cObj->stdWrap($conf['jsfile'], $conf['jsfile.'])));
-
+		$jsdata = $this->cObj->stdWrap($conf['jsdata'], $conf['jsdata.']);
+		$jsfile = preg_replace('|^'.PATH_site.'|i','',t3lib_div::getFileAbsFileName($this->cObj->stdWrap($conf['jsfile'], $conf['jsfile.'])));
 		if ($jsfile!='') $GLOBALS['TSFE']->additionalHeaderData['mootools'] .= chr(10).'<script type="text/javascript" src="'.$jsfile.'"></script>';
-//		if ($jsdata!='') $GLOBALS['TSFE']->additionalHeaderData['mootools'] .= chr(10).'<script type="text/javascript">'.$jsdata.'</script>';
 		if ($jsdata!='') $GLOBALS['TSFE']->additionalHeaderData['mootools'] .= chr(10).'<script type="text/javascript">'.chr(10).'/*<![CDATA[*/'.chr(10).'<!--'.chr(10).$jsdata.chr(10).'// -->'.chr(10).'/*]]>*/'.chr(10).'</script>';
 	}
 
